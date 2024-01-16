@@ -42,14 +42,12 @@ def sync_data(source_data: list[tuple], target_db_data: list[tuple]):
                                 if len(update_query_part) > 0:
                                     update_query_part += ", "
                                 update_query_part += f"{attribute} = '{row[index]}'"
+                            if len(update_query_part) > 0:
                                 query = f"UPDATE {config.TARGET_TABLE_NAME} SET {update_query_part} WHERE {config.PRIMARY_KEY} = '{primary_key_value}';"
                             
                             # delete this row from target db data
                             target_db_data.remove(target_row)
                             break
-
-                        
-                            
                     else:
                         attributes = ", ".join(config.ATTIBUTES)
                         query = f"INSERT INTO {config.TARGET_TABLE_NAME} ({attributes}) VALUES {row};"
