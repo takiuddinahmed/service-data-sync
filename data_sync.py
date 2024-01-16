@@ -83,7 +83,6 @@ def get_target_db_data():
         with conn.cursor() as cur:
             attributes = ", ".join(config.ATTIBUTES)
             query = f"SELECT {attributes} FROM {config.TARGET_TABLE_NAME};"
-            query_log.append(query)
             cur.execute(query=query)
             return cur.fetchall()
 
@@ -95,7 +94,6 @@ def get_source_data():
         with conn.cursor() as cur:
             attributes = ", ".join(config.ATTIBUTES)
             query = f"SELECT {attributes} FROM {config.SOURCE_TABLE_NAME};"
-            query_log.append(query)
             cur.execute(query=query)
             return cur.fetchall()
 
