@@ -1,4 +1,4 @@
-from curses import raw
+
 import traceback
 from datetime import datetime
 import psycopg2
@@ -48,7 +48,7 @@ def sync_data(source_data: list[dict], target_data: list[dict]):
                         })
                 es.index(index=config.ELASTIC_SEARCH_INDEX, id=id, body=data)
             
-            es.indices.refresh(index=config.ELASTIC_SEARCH_INDEX)
+        es.indices.refresh(index=config.ELASTIC_SEARCH_INDEX)
         
 
         # remain terget db data will be deleted
@@ -105,11 +105,12 @@ def get_source_data():
                 primary_key_index = config.ATTIBUTES.index(config.PRIMARY_KEY)
                 primary_key_value = row[primary_key_index]
                 id = primary_key_value
+                _row = tuple(str(item) for item in row)
                 data = {}
                 for index, attribute in enumerate(config.ATTIBUTES):
                     if index == primary_key_index:
                         continue
-                    data[attribute] = row[index]
+                    data[attribute] = _row[index]
                 formatted_data.append({"id":id, "data":data})
             return formatted_data
 
