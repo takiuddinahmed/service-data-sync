@@ -162,4 +162,4 @@ cython_debug/
 # custom
 query*.log
 elastic_log*.log
-logs/
+*.log
