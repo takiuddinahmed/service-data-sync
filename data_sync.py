@@ -22,6 +22,7 @@ def run():
 
 def sync_data(source_data: list[tuple], target_db_data: list[tuple]):
     with get_connection(config.TARGET_DB_NAME) as conn:
+        print("connected to ", config.TARGET_DB_NAME)
         with conn.cursor() as cur:
             for row in source_data:
                 try:
@@ -50,7 +51,8 @@ def sync_data(source_data: list[tuple], target_db_data: list[tuple]):
                             break
                     else:
                         attributes = ", ".join(config.ATTIBUTES)
-                        query = f"INSERT INTO {config.TARGET_TABLE_NAME} ({attributes}) VALUES {row};"
+                        _row = tuple(str(item) for item in row)
+                        query = f"INSERT INTO {config.TARGET_TABLE_NAME} ({attributes}) VALUES {_row};"
 
 
                     if query and len(query) > 0:
@@ -78,6 +80,7 @@ def get_target_db_data():
     Get target db data to compare with source
     """
     with get_connection(config.TARGET_DB_NAME) as conn:
+        print("connected to target")
         with conn.cursor() as cur:
             attributes = ", ".join(config.ATTIBUTES)
             query = f"SELECT {attributes} FROM {config.TARGET_TABLE_NAME};"
@@ -89,6 +92,7 @@ def get_source_data():
     Get source db data
     """
     with get_connection(config.SOURCE_DB_NAME) as conn:
+        print("connected to source db")
         with conn.cursor() as cur:
             attributes = ", ".join(config.ATTIBUTES)
             query = f"SELECT {attributes} FROM {config.SOURCE_TABLE_NAME};"
@@ -104,3 +108,6 @@ def get_connection(dbname: str ) -> psycopg2.extensions.connection:
         host=config.DB_HOST,
         port=config.DB_PORT
     )
+
+if __name__ == "__main__":
+    run()
