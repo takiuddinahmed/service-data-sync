@@ -11,10 +11,12 @@ DB_PASS = os.getenv("DB_PASS")
 ELASTIC_SEARCH_DB_URI = os.getenv("ELASTIC_SEARCH_DB_URI")
 
 
-SOURCE_DB_NAME = "lax_backend"
+SOURCE_DB_NAME = "lax_prod"
+# SOURCE_DB_NAME = "lax_backend"
 SOURCE_TABLE_NAME = "public.user"
 
-TARGET_DB_NAME = "lax_test_sync"
+TARGET_DB_NAME = "fodb"
+# TARGET_DB_NAME = "lax_flow"
 TARGET_TABLE_NAME = "public.user"
 
 ELASTIC_SEARCH_INDEX = "user_test"
@@ -24,6 +26,8 @@ ATTIBUTES = [
     "firstname",
     "lastname",
     "email",
+    "created_at",
+    "updated_at"
 ]
 PRIMARY_KEY = "id"
 
